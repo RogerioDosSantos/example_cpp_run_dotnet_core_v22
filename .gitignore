@@ -1,0 +1,8 @@
+
+tags
+/**/obj/
+/**/.vs/
+/**/bin/
+/**/Debug/
+/**/*.vcxproj.filters
+/**/*.vcxproj.user
