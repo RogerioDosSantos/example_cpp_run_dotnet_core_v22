@@ -6,3 +6,5 @@ tags
 /**/Debug/
 /**/*.vcxproj.filters
 /**/*.vcxproj.user
+/**/*.csproj.user
+/**/*.pubxml.user

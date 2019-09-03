@@ -7,9 +7,7 @@ namespace Example.Cpp.Managed.Executable
     {
         static void Main(string[] args)
         {
-            ManagedLibrary managedLibrary = new ManagedLibrary();
-            int number = managedLibrary.GetNumber(10);
-            Console.WriteLine($"Managed Library - GetNumber(10) = {number}");
+            Console.WriteLine(ManagedClass.ManagedFunction("P1", 2));
         }
     }
 }
