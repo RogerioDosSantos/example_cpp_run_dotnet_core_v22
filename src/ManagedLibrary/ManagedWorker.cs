@@ -57,5 +57,12 @@ namespace ManagedLibraryNamespace
         {
             return true;
         }
+
+        [return: MarshalAs(UnmanagedType.R8)]
+        public static double DoubleReturn()
+        {
+            return -10.5;
+        }
+
     }
 }

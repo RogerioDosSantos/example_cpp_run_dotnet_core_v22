@@ -8,6 +8,7 @@ using interop_dotnet_core::DotNetCoreInterop;
 
 // Simple Function Declaration
 typedef bool (__stdcall *BoolReturnFunctionPtr)();
+typedef double (__stdcall *GetExpirationTermPtr)();
 // Complex Function Declaration
 typedef int (*report_callback_ptr)(int progress);
 typedef char* (__stdcall *DoWorkFunctionPtr)(const char* jobName, int iterations, int dataSize, double* data, report_callback_ptr callbackFunction);
@@ -22,6 +23,7 @@ int main(int argc, char* argv[])
 		printf("ERROR: Could not initialize .Net Core Interop.\n");
 		return -1;
 	}
+
 	// Execute Simple Function BoolReturnFunction
 	BoolReturnFunctionPtr bool_return_function_ptr;
 	if (!dotnetcore.GetFunction("ManagedLibrary, Version=1.0.0.0", "ManagedLibraryNamespace", "ManagedClass", "BoolReturn", (void**)& bool_return_function_ptr))
@@ -36,6 +38,7 @@ int main(int argc, char* argv[])
 		return -1;
 	}
 	printf("SUCCESS: Simple Function executed properly.\n");
+	
 	// Execute Complex Function DoWork
 	DoWorkFunctionPtr do_work_function_ptr;
 	if (!dotnetcore.GetFunction("ManagedLibrary, Version=1.0.0.0", "ManagedLibraryNamespace", "ManagedClass", "DoWork", (void**)& do_work_function_ptr))
@@ -62,7 +65,21 @@ int main(int argc, char* argv[])
 		printf("ERROR: Could not Release the returned string.\n");
 		return -1;
 	}
-	if(!dotnetcore.End())
+	// Execute Simple Function DoubleReturn
+	GetExpirationTermPtr double_return_ptr;
+	if (!dotnetcore.GetFunction("ManagedLibrary, Version=1.0.0.0", "ManagedLibraryNamespace", "ManagedClass", "DoubleReturn", (void**)& double_return_ptr))
+	{
+		printf("ERROR: Could not get the function. (double_return_ptr)\n");
+		return -1;
+	}
+	double expiration_term = double_return_ptr();
+	if (expiration_term < 0)
+	{
+		printf("ERROR: Got the wrong result from the double_return_ptr function.\n");
+		return -1;
+	}
+	printf("SUCCESS: double_return_ptr Function executed properly.\n");
+	if (!dotnetcore.End())
 	{
 		printf("ERROR: Could not end the .Net Core Interop.\n");
 		return -1;
